@@ -1,0 +1,13 @@
+Stage Wallet Authority
+    command: certstrap --depot-path . init --common-name "Stage Wallet" --expires "3 years"
+    passphrase: SBWpass123
+
+Domain
+    command: certstrap --depot-path . request-cert --common-name 1.walletd.stage.blox.io
+    passphrase: SBWDpass123
+    sign: certstrap --depot-path . sign --CA "Stage Wallet" --expires="3 years" 1.walletd.stage.blox.io
+
+Validator
+    command: certstrap --depot-path . request-cert --common-name client1
+    passphrase:<EMPTY>
+    sign: certstrap --depot-path . sign --CA "Stage Wallet" --expires="3 years" client1

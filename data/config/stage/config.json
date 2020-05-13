@@ -1,0 +1,7 @@
+{
+  "server": {
+    "name": "1.walletd.stage.blox.io",
+    "port": "8088"
+  },
+  "eth2dir": "/data/wallets"
+}

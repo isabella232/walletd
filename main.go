@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"flag"
+	"github.com/shibukawa/configdir"
 	"os"
 	"runtime"
 	"strings"
@@ -30,6 +31,8 @@ func main() {
 	flag.StringVar(&pprof, "pprof", "", "address of a pprof interface for profiling")
 	trace := false
 	flag.BoolVar(&trace, "trace", false, "provide opentracing stats")
+	confDir := ""
+	flag.StringVar(&confDir, "conf-dir", "", "configuration folder full path")
 	flag.Parse()
 
 	if pprof != "" {
@@ -62,7 +65,11 @@ func main() {
 	}
 
 	// Fetch the configuration.
-	config, err := core.NewConfig()
+	if confDir == "" {
+		configDirs := configdir.New("wealdtech", "walletd")
+		confDir = configDirs.QueryFolders(configdir.Global)[0].Path
+	}
+	config, err := core.NewConfig(confDir)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to obtain configuration")
 	}
@@ -79,7 +86,7 @@ func main() {
 		zerolog.SetGlobalLevel(zerolog.InfoLevel)
 	}
 
-	permissions, err := core.FetchPermissions()
+	permissions, err := core.FetchPermissions(confDir)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to obtain permissions")
 	}
@@ -90,7 +97,7 @@ func main() {
 	}
 
 	// Initialise the keymanager stores.
-	stores, err := core.InitStores(ctx, config.Stores)
+	stores, err := core.InitStores(ctx, config.Stores, config.ETH2Dir)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to initialise stores")
 	}
@@ -103,7 +110,7 @@ func main() {
 
 	// Set up the autounlocker.
 	var autounlocker autounlocker.Service
-	keysConfig, err := core.FetchKeysConfig()
+	keysConfig, err := core.FetchKeysConfig(confDir)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to obtain keys config")
 	}

@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  bloxapp_walletd:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./data/config/stage:/data/config/stage
+    command: "/go/bin/walletd -conf-dir=/data/config/stage"
+    ports:
+      - "8088:8088"
+    restart: on-failure

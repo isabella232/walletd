@@ -4,7 +4,6 @@ import (
 	"path/filepath"
 
 	"github.com/pkg/errors"
-	"github.com/shibukawa/configdir"
 	"github.com/spf13/viper"
 )
 
@@ -14,6 +13,7 @@ type Config struct {
 	Server    *ServerConfig     `json:"server"`
 	Stores    []*Store          `json:"stores"`
 	Rules     []*RuleDefinition `json:"rules"`
+	ETH2Dir   string            `json:"eth2dir"`
 }
 
 // ServerConfig contains configuration for the server.
@@ -30,10 +30,8 @@ const (
 
 // NewConfig creates a new configuration.
 // Configuration can come from the configuration file or environment variables.
-func NewConfig() (*Config, error) {
+func NewConfig(configPath string) (*Config, error) {
 	viper.SetConfigName("config")
-	configDirs := configdir.New("wealdtech", "walletd")
-	configPath := configDirs.QueryFolders(configdir.Global)[0].Path
 	viper.AddConfigPath(configPath)
 	if err := viper.ReadInConfig(); err != nil {
 		if _, ok := err.(viper.ConfigFileNotFoundError); !ok {

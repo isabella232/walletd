@@ -22,13 +22,12 @@ type Store struct {
 }
 
 // InitStores initialises the stores from a configuration.
-func InitStores(ctx context.Context, stores []*Store) ([]e2wtypes.Store, error) {
+func InitStores(ctx context.Context, stores []*Store, eth2Dir string) ([]e2wtypes.Store, error) {
 	span, _ := opentracing.StartSpanFromContext(ctx, "core.InitStores")
 	defer span.Finish()
 
 	if len(stores) == 0 {
-		log.Warn().Msg("No stores configured; using default")
-		return initDefaultStores(), nil
+		return initDefaultStores(eth2Dir), nil
 	}
 	res := make([]e2wtypes.Store, 0, len(stores))
 	for i, store := range stores {
@@ -60,8 +59,13 @@ func InitStores(ctx context.Context, stores []*Store) ([]e2wtypes.Store, error) 
 }
 
 // initDefaultStores initialises the default stores.
-func initDefaultStores() []e2wtypes.Store {
+func initDefaultStores(eth2Dir string) []e2wtypes.Store {
 	res := make([]e2wtypes.Store, 1)
-	res[0] = filesystem.New()
+	if eth2Dir != "" {
+		res[0] = filesystem.New(filesystem.WithLocation(eth2Dir))
+	} else {
+		log.Warn().Msg("No stores configured; using default")
+		res[0] = filesystem.New()
+	}
 	return res
 }

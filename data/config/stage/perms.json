@@ -1,0 +1,9 @@
+{
+	"certificates": [{ 
+    		"name": "client1",
+    		"permissions": [{
+        		"path": "test",
+       			"operations": ["All"]
+      		}]
+	}]
+}

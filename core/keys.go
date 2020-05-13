@@ -4,8 +4,6 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"path/filepath"
-
-	"github.com/shibukawa/configdir"
 )
 
 // KeysConfig provides information about keys for automatic unlocking.
@@ -14,9 +12,7 @@ type KeysConfig struct {
 }
 
 // FetchKeysConfig fetches keys from the JSON configuration file.
-func FetchKeysConfig() (*KeysConfig, error) {
-	configDirs := configdir.New("wealdtech", "walletd")
-	configPath := configDirs.QueryFolders(configdir.Global)[0].Path
+func FetchKeysConfig(configPath string) (*KeysConfig, error) {
 	path := filepath.Join(configPath, "keys.json")
 	data, err := ioutil.ReadFile(path)
 	if err != nil {

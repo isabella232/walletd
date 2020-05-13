@@ -46,5 +46,3 @@ require (
 	google.golang.org/grpc v1.29.1
 	gopkg.in/ini.v1 v1.55.0 // indirect
 )
-
-replace github.com/wealdtech/go-eth2-wallet-hd/v2 => ../go-eth2-wallet-hd

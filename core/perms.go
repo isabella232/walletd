@@ -6,8 +6,6 @@ import (
 	"io/ioutil"
 	"path/filepath"
 	"strings"
-
-	"github.com/shibukawa/configdir"
 )
 
 // Permissions provides information about per-client permissions.
@@ -28,9 +26,7 @@ type CertificatePerms struct {
 }
 
 // FetchPermissions fetches permissions from the JSON configuration file.
-func FetchPermissions() (*Permissions, error) {
-	configDirs := configdir.New("wealdtech", "walletd")
-	configPath := configDirs.QueryFolders(configdir.Global)[0].Path
+func FetchPermissions(configPath string) (*Permissions, error) {
 	path := filepath.Join(configPath, "perms.json")
 	data, err := ioutil.ReadFile(path)
 	if err != nil {
