@@ -10,6 +10,7 @@ RUN apk add build-base
 WORKDIR $GOPATH/src/bloxapp/walletd
 COPY . .
 COPY ./data/config/stage /data/config/stage
+COPY ./data/wallets /data/wallets
 # Fetch dependencies.
 # Using go get.
 #RUN go get -d -v
