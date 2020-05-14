@@ -60,6 +60,5 @@ spec:
         - containerPort: 8088
         command: ["/bin/sh"]
         args: ["-c", "while true; do echo hello; sleep infinity;done"]
-
 #        command: ["/go/bin/walletd"]
 #        args: ["-conf-dir=/data/config/stage"]
