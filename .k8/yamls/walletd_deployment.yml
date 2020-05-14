@@ -58,4 +58,5 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 8088 
-        command: ["/go/bin/walletd", "-conf-dir=/data/config/stage"] 
+        command: ["/go/bin/walletd"]
+        args: ["-conf-dir=/data/config/stage"]
