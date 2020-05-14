@@ -8,6 +8,7 @@ services:
     volumes:
       - ./data/config/local:/data/config/stage
     command: "/go/bin/walletd -conf-dir=/data/config/stage"
+#    command: "/bin/sh"
     ports:
       - "8088:8088"
     restart: on-failure
