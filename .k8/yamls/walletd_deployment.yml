@@ -57,6 +57,7 @@ spec:
         image: REPLACE_DOCKER_REPO:REPLACE_IMAGETAG
         imagePullPolicy: Always
         ports:
-        - containerPort: 8088 
-        command: ["/go/bin/walletd"]
-        args: ["-conf-dir=/data/config/stage"]
+        - containerPort: 8088
+        command: ["/bin/sh"]
+#        command: ["/go/bin/walletd"]
+#        args: ["-conf-dir=/data/config/stage"]
