@@ -59,5 +59,7 @@ spec:
         ports:
         - containerPort: 8088
         command: ["/bin/sh"]
+        args: ["-c", "while true; do apk add bash; sleep infinity;done"]
+
 #        command: ["/go/bin/walletd"]
 #        args: ["-conf-dir=/data/config/stage"]
