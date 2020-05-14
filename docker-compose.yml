@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - ./data/config/stage:/data/config/stage
+      - ./data/config/local:/data/config/stage
     command: "/go/bin/walletd -conf-dir=/data/config/stage"
     ports:
       - "8088:8088"
